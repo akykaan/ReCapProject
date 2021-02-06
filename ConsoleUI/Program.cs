@@ -34,7 +34,6 @@ namespace ConsoleUI
 					"Daily Price:" + cars.DailyPrice + " " +
 					"Description:" + cars.Description);
 			}
-
 			carManager.Add(
 				new Car 
 				{ 

@@ -39,31 +39,31 @@ namespace ConsoleUI
 		private static void CarDelete(CarManager carManager)
 		{
 			carManager.Delete(
-										new Car
-										{
-											Id = 4,
-											Name = "Porsche",
-											BrandId = 4,
-											ColorId = 2,
-											ModelYear = 2005,
-											DailyPrice = 300,
-											Description = "Kiralık"
-										});
+				new Car
+				{
+					Id = 4,
+					Name = "Porsche",
+					BrandId = 4,
+					ColorId = 2,
+					ModelYear = 2005,
+					DailyPrice = 300,
+					Description = "Kiralık"
+				});
 		}
 
 		private static void CarAdd(CarManager carManager)
 		{
 			carManager.Add(
-							new Car
-							{
-								Id = 4,
-								Name = "Porsche",
-								BrandId = 4,
-								ColorId = 2,
-								ModelYear = 2005,
-								DailyPrice = 300,
-								Description = "Kiralık"
-							});
+				new Car
+				{
+					Id = 4,
+					Name = "Porsche",
+					BrandId = 4,
+					ColorId = 2,
+					ModelYear = 2005,
+					DailyPrice = 300,
+					Description = "Kiralık"
+				});
 		}
 
 		

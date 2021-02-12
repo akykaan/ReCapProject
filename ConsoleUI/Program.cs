@@ -13,75 +13,102 @@ namespace ConsoleUI
 			BrandManager brandManager = new BrandManager(new EfBrandDal());
 			ColorManager colorManager = new ColorManager(new EfColorDal());
 
-			Console.WriteLine("-----GetAll-----");
-			foreach (var cars in carManager.GetAll())
-			{
-				Console.WriteLine(
-					"Id:"+cars.Id+" "+
-					"Yılı:"+cars.BrandId + " "+
-					"Color Id:"+ cars.ColorId + " "+
-					"Model Year:" + cars.ModelYear + " " +
-					"Daily Price:" + cars.DailyPrice + " " +
-					"Description:" + cars.Description);
-			}
-			Console.WriteLine("\n 7 nummara Id'li arabayı ekledik");
+			brandManager.Add(new Brand { Id = 4, Name = "Porsche" });
+			colorManager.Add(new Color { Id = 4, Name = "Sarı" });
+
+			Console.WriteLine("\n-----Add-----\n");
+			CarAdd(carManager);
+
+			Console.WriteLine("\n-----CarGetById-----\n");
+			CarGetById(carManager);
+
+			Console.WriteLine("\n-----CarGetAll-----\n");
+			CarGetAll(carManager);
+
+			Console.WriteLine("\n-----CarTest-----\n");
+			CarTest();
+
+			Console.WriteLine("\n-----CarDelete-----\n");
+			CarDelete(carManager);
+
+			Console.WriteLine("\n-----CarTest-----\n");
+			CarTest();
+
+		}
+
+		private static void CarDelete(CarManager carManager)
+		{
+			carManager.Delete(
+										new Car
+										{
+											Id = 4,
+											Name = "Porsche",
+											BrandId = 4,
+											ColorId = 2,
+											ModelYear = 2005,
+											DailyPrice = 300,
+											Description = "Kiralık"
+										});
+		}
+
+		private static void CarAdd(CarManager carManager)
+		{
 			carManager.Add(
-				new Car 
-				{ 
-					Id = 7,
-					BrandId = 77,
-					ColorId=777,
-					ModelYear = 1992, 
-					DailyPrice = 5123,
-					Description = "Kiralık"
-				});
+							new Car
+							{
+								Id = 4,
+								Name = "Porsche",
+								BrandId = 4,
+								ColorId = 2,
+								ModelYear = 2005,
+								DailyPrice = 300,
+								Description = "Kiralık"
+							});
+		}
 
-			Console.WriteLine("\nHata mesajı için günlük fiyatı 0'dan düşük veri ekledik");
-			carManager.Add( 
-				new Car
-				{
-					Id = 7,
-					BrandId = 77,
-					ColorId = 777,
-					ModelYear = 1992,
-					DailyPrice = -5123,// negatif değer
-					Description = "Kiralık"
-				});
+		
 
-			Console.WriteLine("\nHata mesajı için araba ismi 2 karakter olmayan veri ekledik");
-			brandManager.Add(
-				new Brand
-				{
-					BrandName = "K" // 
-				});
-			Console.WriteLine("\nAdd sonrası cagırma\n");
-
-			foreach (var cars in carManager.GetAll())
+		private static void CarGetById(CarManager carManager)
+		{
+			foreach (var car in carManager.GetById(3))
 			{
 				Console.WriteLine(
-					"Id:" + cars.Id + " " +
-					"Yılı:" + cars.BrandId + " " +
-					"Color Id:" + cars.ColorId + " " +
-					"Model Year:" + cars.ModelYear + " " +
-					"Daily Price:" + cars.DailyPrice + " " +
-					"Description:" + cars.Description);
+					"Car Id:" + car.Id +
+					"Name:" + car.Name +
+					"Brand Id:" + car.BrandId +
+					"Color Id:" + car.ColorId +
+					"Model Year:" + car.ModelYear +
+					"Daily Price:" + car.DailyPrice +
+					"Description:" + car.Description);
 			}
+		}
 
-			carManager.Delete(new Car { Id=7});
-
-			Console.WriteLine("\n 7 Id'li eklenen veriyi tekrar sildik\nDelete sonrası cagırma\n");
-
-			foreach (var cars in carManager.GetAll())
+		private static void CarGetAll(CarManager carManager)
+		{
+			foreach (var car in carManager.GetAll())
 			{
 				Console.WriteLine(
-					"Id:" + cars.Id + " " +
-					"Yılı:" + cars.BrandId + " " +
-					"Color Id:" + cars.ColorId + " " +
-					"Model Year:" + cars.ModelYear + " " +
-					"Daily Price:" + cars.DailyPrice + " " +
-					"Description:" + cars.Description);
+					"Car Id:" + car.Id +
+					"Name:" + car.Name +
+					"Brand Id:" + car.BrandId +
+					"Color Id:" + car.ColorId +
+					"Model Year:" + car.ModelYear +
+					"Daily Price:" + car.DailyPrice +
+					"Description:" + car.Description);
 			}
+		}
 
+		private static void CarTest()
+		{
+			CarManager carManager = new CarManager(new EfCarDal());
+			foreach (var car in carManager.GetCarDetails())
+			{
+				Console.WriteLine(
+					"Car Name:" + car.CarName +"\n"+
+					"Brand Name:" + car.BrandName + "\n" +
+					"Color Name:" + car.ColorName + "\n " +
+					"Daily Price:" + car.DailyPrice);
+			}
 		}
 	}
 }

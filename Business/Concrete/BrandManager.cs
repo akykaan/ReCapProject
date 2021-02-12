@@ -18,7 +18,7 @@ namespace Business.Concrete
 
 		public void Add(Brand brand)
 		{
-			if (brand.BrandName.Length >= 2)
+			if (brand.Name.Length >= 2)
 				_brandDal.Add(brand);
 			else
 				Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
@@ -26,7 +26,7 @@ namespace Business.Concrete
 
 		public void Update(Brand brand)
 		{
-			if (brand.BrandName.Length >= 2)
+			if (brand.Name.Length >= 2)
 				_brandDal.Update(brand);
 			else
 				Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
@@ -44,7 +44,7 @@ namespace Business.Concrete
 
 		public Brand GetById(int id)
 		{
-			return _brandDal.Get(b => b.BrandId == id);
+			return _brandDal.Get(b => b.Id == id);
 		}
 		
 	}

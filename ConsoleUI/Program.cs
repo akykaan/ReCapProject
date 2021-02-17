@@ -12,102 +12,122 @@ namespace ConsoleUI
 			CarManager carManager = new CarManager(new EfCarDal());
 			BrandManager brandManager = new BrandManager(new EfBrandDal());
 			ColorManager colorManager = new ColorManager(new EfColorDal());
+			CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+			RentalManager rentalManager = new RentalManager(new EfRentDal());
+			UserManager userManager = new UserManager(new EfUserDal());
 
-			brandManager.Add(new Brand { Id = 4, Name = "Porsche" });
-			colorManager.Add(new Color { Id = 4, Name = "Sarı" });
+			ColorAdded(colorManager);
 
-			Console.WriteLine("\n-----Add-----\n");
-			CarAdd(carManager);
+			BrandAdded(brandManager);
 
-			Console.WriteLine("\n-----CarGetById-----\n");
-			CarGetById(carManager);
+			CarAdded(carManager);
 
-			Console.WriteLine("\n-----CarGetAll-----\n");
-			CarGetAll(carManager);
+			UserAdded(userManager);
 
-			Console.WriteLine("\n-----CarTest-----\n");
-			CarTest();
+			CustomerAdded(customerManager);
 
-			Console.WriteLine("\n-----CarDelete-----\n");
-			CarDelete(carManager);
-
-			Console.WriteLine("\n-----CarTest-----\n");
-			CarTest();
+			RentalAdded(rentalManager);
 
 		}
 
-		private static void CarDelete(CarManager carManager)
+		private static void RentalAdded(RentalManager rentalManager)
 		{
-			carManager.Delete(
-				new Car
-				{
-					Id = 4,
-					Name = "Porsche",
-					BrandId = 4,
-					ColorId = 2,
-					ModelYear = 2005,
-					DailyPrice = 300,
-					Description = "Kiralık"
-				});
+			rentalManager.Add(new Rental {CarId = 5, CustomerId = 2, RentDate = DateTime.Now, ReturnDate = DateTime.Now });
+			foreach (var rental in rentalManager.GetAll().Data)
+			{
+				Console.WriteLine(
+					"Car Id:" + rental.CarId + " " +
+					"Customer Id:" + rental.CustomerId + " " +
+					"RentDate:" + rental.RentDate + " " +
+					"Return Date:" + rental.RentDate + "\n");
+			}
 		}
 
-		private static void CarAdd(CarManager carManager)
+		private static void BrandAdded(BrandManager brandManager)
+		{
+			brandManager.Add(new Brand { Name = "Audi" });
+
+			foreach (var brand in brandManager.GetAll().Data)
+			{
+				Console.WriteLine("Id:"+brand.Id+"\n"+"Brand Name:" + brand.Name + "\n");
+			}
+		}
+
+		private static void CarAdded(CarManager carManager)
 		{
 			carManager.Add(
-				new Car
+							new Car
+							{
+								BrandId = 1,
+								ColorId = 1,
+								DailyPrice = 111,
+								Description = "Satılık",
+								ModelYear = 2019,
+								Name = "Audi4"
+							});
+
+			foreach (var car in carManager.GetAll().Data)
+			{
+				Console.WriteLine(
+					"Id:" + car.Id + " " +
+					"Brand Id:" + car.BrandId + " " +
+					"Color Id:" + car.ColorId + " " +
+					"DailyPrice:" + car.DailyPrice + " " +
+					"Description:" + car.Description + " " +
+					"ModelYear:" + car.ModelYear + " " +
+					"Name:" + car.ModelYear + "\n");
+			}
+		}
+
+		private static void ColorAdded(ColorManager colorManager)
+		{
+			colorManager.Add(new Color { Name = "Mavi" });
+
+			foreach (var color in colorManager.GetAll().Data)
+			{
+				Console.WriteLine("Id:" + color.Id + "\n" + "Name:" + color.Name + "\n");
+			}
+		}
+
+		private static void UserAdded(UserManager userManager)
+		{
+			userManager.Add(new User { FirstName = "kaan", LastName = "Akyüz", Email = "...@gmail.com", Password = "12345" });
+
+			foreach (var user in userManager.GetAll().Data)
+			{
+				Console.WriteLine(
+
+					"First Name:" + user.FirstName + " " +
+					"Last Name:" + user.LastName + " " +
+					"Email:" + user.Email + " " +
+					"Password:" + user.Password + "\n");
+			}
+		}
+
+		private static void CustomerAdded(CustomerManager customerManager)
+		{
+			var result = customerManager.Add(
+							new Customer
+							{
+								UserId = 2,
+								CompanyName = "Tesla"
+							}
+
+							);
+
+			if (result.Success)
+			{
+				Console.WriteLine(result.Message);
+				foreach (var customer in customerManager.GetAll().Data)
 				{
-					Id = 4,
-					Name = "Porsche",
-					BrandId = 4,
-					ColorId = 2,
-					ModelYear = 2005,
-					DailyPrice = 300,
-					Description = "Kiralık"
-				});
-		}
-
-		
-
-		private static void CarGetById(CarManager carManager)
-		{
-			foreach (var car in carManager.GetById(3))
-			{
-				Console.WriteLine(
-					"Car Id:" + car.Id +
-					"Name:" + car.Name +
-					"Brand Id:" + car.BrandId +
-					"Color Id:" + car.ColorId +
-					"Model Year:" + car.ModelYear +
-					"Daily Price:" + car.DailyPrice +
-					"Description:" + car.Description);
+					Console.WriteLine(
+						"User Id:"+customer.UserId+"\n"+
+						"Company Name:"+customer.CompanyName+"\n");
+				}
 			}
-		}
-
-		private static void CarGetAll(CarManager carManager)
-		{
-			foreach (var car in carManager.GetAll())
+			else
 			{
-				Console.WriteLine(
-					"Car Id:" + car.Id +
-					"Name:" + car.Name +
-					"Brand Id:" + car.BrandId +
-					"Color Id:" + car.ColorId +
-					"Model Year:" + car.ModelYear +
-					"Daily Price:" + car.DailyPrice +
-					"Description:" + car.Description);
-			}
-		}
-
-		private static void CarTest()
-		{
-			CarManager carManager = new CarManager(new EfCarDal());
-			foreach (var car in carManager.GetCarDetails())
-			{
-				Console.WriteLine(
-					"Car Name:" + car.CarName +"\n"+
-					"Brand Name:" + car.BrandName + "\n" +
-					"Color Name:" + car.ColorName + "\n " +
-					"Daily Price:" + car.DailyPrice);
+				Console.WriteLine(result.Message);
 			}
 		}
 	}

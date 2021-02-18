@@ -25,11 +25,11 @@ namespace Business.Concrete
 			if(car.DailyPrice>0)
 			{
 				_carDal.Add(car);
-				return new SuccessResult(Messages.ProductAdded);
+				return new SuccessResult(Messages.CarAdded);
 			}
 			else
 			{
-				return new ErrorResult(Messages.ProductNameInvalid);
+				return new ErrorResult(Messages.CarNameInvalid);
 				//Console.WriteLine("günlük fiyatı 0'dan büyük giriniz!");
 			}
 
@@ -38,7 +38,7 @@ namespace Business.Concrete
 		public IResult Update(Car car)
 		{
 			_carDal.Update(car);
-			return new SuccessResult(Messages.ProductAdded);
+			return new SuccessResult(Messages.CarUpdated);
 		}
 
 		public IResult Delete(Car car)
@@ -49,7 +49,7 @@ namespace Business.Concrete
 
 		public IDataResult<List<Car>> GetAll()
 		{
-			return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.ProductsListed);
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
 		}
 		public IDataResult<List<Car>> GetById(int Id)
 		{

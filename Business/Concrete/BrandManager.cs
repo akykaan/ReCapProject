@@ -23,7 +23,7 @@ namespace Business.Concrete
 			if (brand.Name.Length >= 2)
 			{
 				_brandDal.Add(brand);
-				return new SuccessResult(Messages.ProductAdded);
+				return new SuccessResult(Messages.BrandAdded);
 			}
 				
 			else

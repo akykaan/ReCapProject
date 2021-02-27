@@ -65,15 +65,15 @@ namespace WebAPI.Controllers
 			return BadRequest(result);
 		}
 
-		[HttpGet("checkreturndate")]
-		public IActionResult CheckReturnDate(int id)
-		{
-			var result = _rentalService.CheckReturnDate(id);
-			if (result.Success)
-			{
-				return Ok(result);
-			}
-			return BadRequest(result);
-		}
+		//[HttpGet("checkreturndate")]
+		//public IActionResult CheckReturnDate(int id)
+		//{
+		//	var result = _rentalService.CheckReturnDate(id);
+		//	if (result.Success)
+		//	{
+		//		return Ok(result);
+		//	}
+		//	return BadRequest(result);
+		//}
 	}
 }

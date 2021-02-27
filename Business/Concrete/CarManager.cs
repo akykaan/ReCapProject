@@ -7,7 +7,8 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -20,18 +21,16 @@ namespace Business.Concrete
 			_carDal = carDal;
 		}
 
+		[ValidationAspect(typeof(CarValidator))]
 		public IResult Add(Car car)
 		{
-			if(car.DailyPrice>0)
-			{
-				_carDal.Add(car);
-				return new SuccessResult(Messages.CarAdded);
-			}
-			else
-			{
-				return new ErrorResult(Messages.CarNameInvalid);
-				//Console.WriteLine("günlük fiyatı 0'dan büyük giriniz!");
-			}
+			_carDal.Add(car);
+			return new SuccessResult(Messages.CarAdded);
+			//else
+			//{
+			//	return new ErrorResult(Messages.CarNameInvalid);
+			//	//Console.WriteLine("günlük fiyatı 0'dan büyük giriniz!");
+			//}
 
 		}
 

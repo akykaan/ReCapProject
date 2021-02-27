@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -18,35 +20,40 @@ namespace Business.Concrete
 			_brandDal = brandDal;
 		}
 
+
+		[ValidationAspect(typeof(BrandValidator))]
 		public IResult Add(Brand brand)
 		{
-			if (brand.Name.Length >= 2)
-			{
-				_brandDal.Add(brand);
-				return new SuccessResult(Messages.BrandAdded);
-			}
+			_brandDal.Add(brand);
+			return new SuccessResult(Messages.BrandAdded);
+			//if (brand.Name.Length >= 2)
+			//{
 				
-			else
-			{
-				return new ErrorResult(Messages.BrandNameInvalid);
-				//Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
-			}
+			//}
+				
+			//else
+			//{
+			//	return new ErrorResult(Messages.BrandNameInvalid);
+			//	//Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
+			//}
 				
 		}
 
+		[ValidationAspect(typeof(BrandValidator))]
 		public IResult Update(Brand brand)
 		{
-			if (brand.Name.Length >= 2)
-			{
-				_brandDal.Update(brand);
-				return new SuccessResult(Messages.ProductAdded);
-			}
+			_brandDal.Update(brand);
+			return new SuccessResult(Messages.ProductAdded);
+			//if (brand.Name.Length >= 2)
+			//{
 				
-			else
-			{
-				return new ErrorResult(Messages.BrandNameInvalid);
-				//Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
-			}
+			//}
+				
+			//else
+			//{
+			//	return new ErrorResult(Messages.BrandNameInvalid);
+			//	//Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır.");
+			//}
 				
 		}
 

@@ -18,15 +18,15 @@ namespace ConsoleUI
 
 			ColorAdded(colorManager);
 
-			BrandAdded(brandManager);
+			//BrandAdded(brandManager);
 
-			CarAdded(carManager);
+			//CarAdded(carManager);
 
-			UserAdded(userManager);
+			//UserAdded(userManager);
 
-			CustomerAdded(customerManager);
+			//CustomerAdded(customerManager);
 
-			RentalAdded(rentalManager);
+			//RentalAdded(rentalManager);
 
 		}
 

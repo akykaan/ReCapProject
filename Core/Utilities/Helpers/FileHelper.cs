@@ -8,7 +8,7 @@ using System.Text;
 namespace Core.Utilities.Helpers
 {
 	public class FileHelper
-	{
+	{ 
         public static string Add(IFormFile file)
         {
             var sourcepath = Path.GetTempFileName();
@@ -55,7 +55,7 @@ namespace Core.Utilities.Helpers
             string fileExtension = ff.Extension;
 
             string path = Environment.CurrentDirectory + @"\wwwroot\Images\CarImages";
-            var newPath = Guid.NewGuid().ToString()+ "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + fileExtension;
+            var newPath = Guid.NewGuid().ToString()+fileExtension;
 
             string result = $@"{path}\{newPath}";
             return result;

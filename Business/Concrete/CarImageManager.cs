@@ -57,7 +57,13 @@ namespace Business.Concrete
 		[ValidationAspect(typeof(CarImageValidator))]
 		public IDataResult<List<CarImage>> GetCarByIdImages(int id)
 		{
-			return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id));
+			IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
+			if (result != null)
+			{
+				return new ErrorDataResult<List<CarImage>>(result.Message);
+			}
+
+			return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
 		}
 
 		public IResult Update(IFormFile file, CarImage carImages)
@@ -84,16 +90,25 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
-		private List<CarImage> CheckIfCarImageNull(int Id)
-		{
-			//string path = Environment.CurrentDirectory + @"\images\default.jpg";
-			string path = @"\Images\default.jpg";
-			var result = _carImagesDal.GetAll(c => c.CarId == Id).Any();
-			if (result)
+		private IDataResult<List<CarImage>> CheckIfCarImageNull(int id)
+		{			
+			try
 			{
-				return _carImagesDal.GetAll(c => c.CarId == Id);
+				string path = @"\wwwroot\uploads\defaultlogo.jpg";
+				var result = _carImagesDal.GetAll(c => c.CarId == id).Any();
+				if (!result)
+				{
+					List<CarImage> carimage = new List<CarImage>();
+					carimage.Add(new CarImage { CarId = id, ImagePath = path, Date = DateTime.Now });
+					return new SuccessDataResult<List<CarImage>>(carimage);
+				}
 			}
-			return new List<CarImage> { new CarImage { CarId = Id, ImagePath = path, Date = DateTime.Now } };
+			catch (Exception exception)
+			{
+
+				return new ErrorDataResult<List<CarImage>>(exception.Message);
+			}
+			return new SuccessDataResult<List<CarImage>>(_carImagesDal.GetAll(p => p.CarId == id).ToList());
 		}
 	}
 }

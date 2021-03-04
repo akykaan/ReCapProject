@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -73,9 +74,10 @@ namespace WebAPI.Controllers
 		public IActionResult GetCarByIdImages(int id)
 		{
 			var result = _carImagesService.GetCarByIdImages(id);
+
 			if (result.Success)
 			{
-				return Ok(result);
+				return Ok(result.Data);
 			}
 			return BadRequest(result);
 		}

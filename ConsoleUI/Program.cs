@@ -9,14 +9,14 @@ namespace ConsoleUI
 	{
 		static void Main(string[] args)
 		{
-			CarManager carManager = new CarManager(new EfCarDal());
-			BrandManager brandManager = new BrandManager(new EfBrandDal());
-			ColorManager colorManager = new ColorManager(new EfColorDal());
-			CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-			RentalManager rentalManager = new RentalManager(new EfRentDal());
-			UserManager userManager = new UserManager(new EfUserDal());
+			//CarManager carManager = new CarManager(new EfCarDal());
+			//BrandManager brandManager = new BrandManager(new EfBrandDal());
+			//ColorManager colorManager = new ColorManager(new EfColorDal());
+			//CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+			//RentalManager rentalManager = new RentalManager(new EfRentDal());
+			//UserManager userManager = new UserManager(new EfUserDal());
 
-			ColorAdded(colorManager);
+			//ColorAdded(colorManager);
 
 			//BrandAdded(brandManager);
 
@@ -29,7 +29,7 @@ namespace ConsoleUI
 			//RentalAdded(rentalManager);
 
 		}
-
+		/*
 		private static void RentalAdded(RentalManager rentalManager)
 		{
 			rentalManager.Add(new Rental {CarId = 5, CustomerId = 2, RentDate = DateTime.Now, ReturnDate = DateTime.Now });
@@ -130,5 +130,6 @@ namespace ConsoleUI
 				Console.WriteLine(result.Message);
 			}
 		}
+		*/
 	}
 }

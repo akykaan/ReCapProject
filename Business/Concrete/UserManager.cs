@@ -45,11 +45,17 @@ namespace Business.Concrete
 		
 		public IDataResult<List<OperationClaim>> GetClaims(User user)
 		{
-			return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+			//return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+
+			var getClaims = _userDal.GetClaims(user);
+			return new SuccessDataResult<List<OperationClaim>>(getClaims);
 		}
 		public IDataResult<User> GetByMail(string email)
 		{
-			return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+			//return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+
+			var getByMail = _userDal.Get(u => u.Email == email);
+			return new SuccessDataResult<User>(getByMail);
 		}
 	}
 }

@@ -14,30 +14,29 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Business.BusinessAspects.Autofac;
 using Core.Utilities.BusinessRules;
+using System.Threading;
 
 namespace Business.Concrete
 {
 	public class CarManager : ICarService
 	{
 		ICarDal _carDal;
-		IColorService _colorService;
 
 		public CarManager(ICarDal carDal)
 		{
 			_carDal = carDal;
 		}
 
-		[SecuredOperation("product.add,admin")]
-		[ValidationAspect(typeof(CarValidator))]
+		[SecuredOperation("car.add,admin")]
 		[ValidationAspect(typeof(CarValidator))]
 		public IResult Add(Car car)
 		{
-			IResult result = BusinessRules.Run(CheckIfColorName(car.Name));
+			//IResult result = BusinessRules.Run(CheckIfColorName(car.Name));
 
-			if (result!=null)
-			{
-				return result;
-			}
+			//if (result!=null)
+			//{
+			//	return result;
+			//}
 			_carDal.Add(car);
 			return new SuccessResult(Messages.CarAdded);
 		}
@@ -57,10 +56,12 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.CarDeleted);
 		}
 
-		//[PerformanceAspect(5)]
-		//[CacheAspect]
+		[PerformanceAspect(5)]
+		[CacheAspect]
+		[SecuredOperation("admin")]
 		public IDataResult<List<Car>> GetAll()
 		{
+			Thread.Sleep(5000);
 			return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
 		}
 
@@ -99,17 +100,6 @@ namespace Business.Concrete
 			//Add(product);
 
 			//return null;
-		}
-
-		private IResult CheckIfColorName(string colorName)
-		{
-			var result = _colorService.GetByName(colorName);
-			if (result.Data.Name!=null)
-			{
-				return new ErrorResult(Messages.ColorNotFound);
-			}
-			return new SuccessResult();
-
 		}
 	}
 }

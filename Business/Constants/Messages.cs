@@ -62,5 +62,7 @@ namespace Business.Constants
 		public static string PasswordError = "Parola hatası";
 
 		public static string AuthorizationDenied ="giriş reddedildi";
+
+		public static string ColorNotFound = "Böyle bir renk yok";
 	}
 }
